@@ -1,8 +1,8 @@
-# TFPlayground
+# Tensorflow Playground
 
-This repository serves as demonstration of tensorflow model implementations and ML concepts in the form of different "
-experiments". A series of base classes are additionally provided in order to facilitate each experiment and generify the
-training process. A short explanation of each experiment is provided below.
+This repository serves as demonstration of tensorflow model implementations and ML concepts in the form of different 
+experiments. A series of base classes are additionally provided in order to facilitate each experiment and generify the
+training process. An explanation of each experiment is provided below.
 
 ### Classifier Experiment
 
@@ -27,8 +27,6 @@ based off the trained model.
 | 8     | Bag         | 
 | 9     | Ankle boot  |
 
-
-
 | Train Dataset | Test Dataset  | EPOCHS | Loss               | Accuracy           |
 |---------------|:--------------|:-------|--------------------|:-------------------|
 | fashion mnist | fashion mnist | 1      | 65.11700439453125  | 0.836899995803833  |
@@ -38,10 +36,10 @@ based off the trained model.
 | fashion mnist | custom        | 10     | 162.7378692626953  | 0.4000000059604645 |
 | fashion mnist | custom        | 100    | 765.4063110351562  | 0.4000000059604645 |
 
- - Visualization for 100 EPOCH Fasion MNIST test dataset
+- Visualization for 100 EPOCH Fasion MNIST test dataset
 
 ![](generated_plots/100EPOCHS%20First%2015%20Image%20Results%20test_loss%20219_7647247314453%20test_acc%200_8655999898910522-1659984932.png)
 
- - Visualization for 10 Custom test dataset
+- Visualization for 10 Custom test dataset
 
 ![](generated_plots/10EPOCHS%20Custom%20Image%20Results%20test_loss%20162_7378692626953%20test_acc%200_4000000059604645-1659984698.png)

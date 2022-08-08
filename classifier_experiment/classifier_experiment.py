@@ -1,5 +1,5 @@
 from common.experiment_base import Experiment
-from ClassifierExperiment.model.classifier import ClassifierTrainer, ClassifierOperator
+from classifier_experiment.model.classifier import ClassifierTrainer, ClassifierOperator
 from PIL import Image, ImageOps
 import tensorflow as tf
 import numpy as np
@@ -27,7 +27,7 @@ class ClassifierExperiment(Experiment):
                 'Bag', # 8
                 'Ankle boot' # 9
             ],
-            'custom_image_dir': '.\ClassifierExperiment\custom images\*.jpg',
+            'custom_image_dir': '.\classifier_experiment\custom images\*.jpg',
             'labels': [0, 8, 8, 3, 2],
             'plot_opts': {
                 'save_figs': True,
