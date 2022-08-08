@@ -29,6 +29,6 @@ based off the trained model.
 
 ![](generated_plots/100EPOCHS%20First%2015%20Image%20Results%20test_loss%20219_7647247314453%20test_acc%200_8655999898910522-1659984932.png)
 
-**Visualization for 10 Custom test dataset**
+**Visualization for 10 EPOCH Custom test dataset**
 
 ![](generated_plots/10EPOCHS%20Custom%20Image%20Results%20test_loss%20162_7378692626953%20test_acc%200_4000000059604645-1659984698.png)
