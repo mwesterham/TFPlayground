@@ -13,7 +13,7 @@ import csv
 
 class ClassifierExperiment(Experiment):
     def __init__(self, config={}):
-        # the inputted config takes precedance over the default
+        # the inputted config takes precedence over the default
         config = {**{
             'EPOCHS': 10,
             'input_shape': (28, 28),
@@ -41,60 +41,85 @@ class ClassifierExperiment(Experiment):
         self.config = config
 
     def execute(self):
+        """Executes the training then returns results like (test_image_results, custom_image_results)"""
+
+        # grab the dataset from the config
         dataset = self.config['dataset']
+
+        # build the trainer and execute the training with the dataset given
         TRAINER = ClassifierTrainer(dataset.load_data(), config={
             'input_shape': self.config['input_shape'],
             'nodes': 128,
             'EPOCHS': self.config['EPOCHS'],
             'num_classes': len(self.config['class_names'])
         })
-        (data, processed_data, trained_tf_model) = TRAINER.run()
+        (processed_data, trained_tf_model) = TRAINER.run()
 
-        _, (test_images, test_labels) = data
+        # build an operator instance with the trained model
         OPERATOR = ClassifierOperator(trained_tf_model)
+
+        # evaluate the model
+        _, (test_images, test_labels) = processed_data
         (test_loss, test_acc) = OPERATOR.evaluate((test_images, test_labels))
 
-        # use and plot test images from dataset
+        # use the trained model to predict the result of the test images
         predictions_array = OPERATOR.use(test_images)
+
+        # plot the predictions against the real labels and save if desired
         self.plot_multi_predictions(predictions_array,
                                     test_labels,
                                     test_images,
                                     15,
                                     plot_title="First 15 Image Results")
-        self.__print_dict(f"{self.config['EPOCHS']}EPOCHS Test Images", {
+
+        # print the loss and save to a csv file if desired
+        test_image_results = {
             "EPOCHS": self.config['EPOCHS'],
             "loss": test_loss,
             "accuracy": test_acc
-        })
+        }
+        self.__print_dict(f"{self.config['EPOCHS']}EPOCHS Test Images", test_image_results)
 
-        # use and plot custom images from internet
-        # forward declaration of all images
+        # obtain all custom images from given directory and preprocess them
         custom_imgs = []
         for f in sorted(glob.glob(self.config['custom_image_dir']), key=os.path.basename):
+            # process the images into a raw data format
             img = Image.open(f)
             img = img.resize(self.config['input_shape'])
             img = ImageOps.grayscale(img)
             img = ImageOps.invert(img)
+            img = np.asarray(img)
 
-            custom_imgs.append(np.asarray(img))
+            # once converted use the trainer's preprocessing function as well
+            img = TRAINER.preprocess(img)
+
+            # append post processed images to an array
+            custom_imgs.append(img)
         custom_imgs = np.array(custom_imgs)
 
-        # correct label indexed by photo name
-        correct_labels = self.config['labels']
+        # use the trained model to predict the custom images
         custom_predictions_array = OPERATOR.use(custom_imgs)
 
+        # evaluate the predctions on the custom images
+        correct_labels = self.config['labels']
         (custom_test_loss, custom_test_acc) = OPERATOR.evaluate((custom_imgs, np.array(correct_labels)))
 
+        # plot the custom predictions and save if desired
         self.plot_multi_predictions(custom_predictions_array,
                                     correct_labels,
                                     custom_imgs,
                                     len(correct_labels),
                                     plot_title="Custom Image Results")
-        self.__print_dict(f"{self.config['EPOCHS']}EPOCHS Custom Images", {
+
+        # print the loss and save if desired
+        custom_image_results = {
             "EPOCHS": self.config['EPOCHS'],
             "loss": custom_test_loss,
             "accuracy": custom_test_acc
-        })
+        }
+        self.__print_dict(f"{self.config['EPOCHS']}EPOCHS Custom Images", custom_image_results)
+
+        return test_image_results, custom_image_results
 
     def plot_image(self, predictions_array, true_label, img):
         plt.grid(False)

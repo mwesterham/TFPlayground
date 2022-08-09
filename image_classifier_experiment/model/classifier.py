@@ -21,11 +21,8 @@ class ClassifierTrainer(TFTrainer):
     def _get_data(self):
         return self.definition['data']
 
-    def _preprocess(self, data):
-        (train_images, train_labels), (test_images, test_labels) = data
-        train_images = train_images / 255.0
-        test_images = test_images / 255.0
-        return (train_images, train_labels), (test_images, test_labels)
+    def preprocess(self, data):
+        return data / 255.0
 
     def _get_tf_model(self):
         # get definitions

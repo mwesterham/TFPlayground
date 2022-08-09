@@ -13,13 +13,17 @@ class TFTrainer(ABC):
         """
         Trains a tf model according to class definition
 
-        :return: tuple like (data, processed_data, trained_tf_model)
+        :return: tuple like (processed_data, trained_tf_model)
         """
         data = self._get_data()
-        processed_data = self._preprocess(data)
+        (train_images, train_labels), (test_images, test_labels) = data
+        processed_data = (
+            (self.preprocess(train_images), train_labels),
+            (self.preprocess(test_images), test_labels)
+        )
         tf_model = self._get_tf_model()
         self._train_tf_model(tf_model, processed_data)
-        return (data, processed_data, tf_model)
+        return (processed_data, tf_model)
 
     @abstractmethod
     def _get_data(self):
@@ -32,7 +36,7 @@ class TFTrainer(ABC):
         pass
 
     @abstractmethod
-    def _preprocess(self, data):
+    def preprocess(self, data):
         """
         Using the data retrieved beforehand, parse and preprocess it into the desired format.
         Must return the preprocessed data
