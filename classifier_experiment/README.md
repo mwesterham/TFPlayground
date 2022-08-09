@@ -49,11 +49,11 @@ colored red if the predicted and real labels do not match.
 
 [100 epochs using the Fashion MNIST as test data]
 
-![](./generated_assets/fashion_mnist/100EPOCHS First 15 Image Results-1660071658.png)
+![](./generated_assets/fashion_mnist/100EPOCHS%20First%2015%20Image%20Results-1660071658.png)
 
 [100 epochs using custom images as test data]
 
-![](./generated_assets/fashion_mnist/100EPOCHS Custom Image Results-1660071659.png)
+![](./generated_assets/fashion_mnist/100EPOCHS%20Custom%20Image%20Results-1660071659.png)
 
 ### Classifier Experiment on MNIST
 
