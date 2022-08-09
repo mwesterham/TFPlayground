@@ -8,8 +8,6 @@ results from these two datasets are compared and analyzed.
 
 ### Experiment: Classifier on Fashion MNIST dataset
 
-- **Results**
-
 The overall results are given below. The model was trained with a variable number of epochs and the accuracy and loss
 were recorded.
 
@@ -29,24 +27,7 @@ Interpretation: The model performs worse the longer it is trained. This may sugg
 seen to be much higher on the custom dataset, we can infer when testing images from the internet (that do not strictly
 adhere to the formatting of the fashion mnist dataset) the model performs worse.
 
-- **Visualization**
-
-Each image is accompanied by a bar graph that shows what probabilities each class was assigned by the trained model.
-Additionally, each image has a description with the predicted label (left hand side) and the real label (right hand side
-in parentheses). The label and bar graph are colored blue if the predicted label matches the real label; they are
-colored red if the predicted and real labels do not match.
-
-[100 epochs using the Fashion MNIST as test data]
-
-![](./generated_assets/fashion_mnist/100EPOCHS%20First%2015%20Image%20Results-1660071658.png)
-
-[100 epochs using custom images as test data]
-
-![](./generated_assets/fashion_mnist/100EPOCHS%20Custom%20Image%20Results-1660071659.png)
-
 ### Experiment: Classifier on MNIST dataset
-
-- **Results**
 
 The overall results are given below. The model was trained with a variable number of epochs and the accuracy and loss
 were recorded.
@@ -69,16 +50,6 @@ Interpretation: Identical to the Fashion MNIST interpretation. The model perform
 may suggest over fitting. Since loss can also be seen to be much higher on the custom dataset, we can infer when testing
 images from the internet (that do not strictly adhere to the formatting of the fashion mnist dataset) the model performs
 worse.
-
-- **Visualization**
-
-[100 epochs using the MNIST as test data]
-
-![](./generated_assets/mnist/100EPOCHS%20First%2015%20Image%20Results-1660071849.png)
-
-[100 epochs using custom images as test data]
-
-![](./generated_assets/mnist/100EPOCHS%20Custom%20Image%20Results-1660071851.png)
 
 ### Analysis and Conclusion
 
