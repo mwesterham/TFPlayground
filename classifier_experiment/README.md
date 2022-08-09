@@ -85,8 +85,8 @@ worse.
 
 [100 epochs using the MNIST as test data]
 
-![](./generated_assets/mnist/100EPOCHS First 15 Image Results-1660071849.png)
+![](./generated_assets/mnist/100EPOCHS%20First%2015%20Image%20Results-1660071849.png)
 
 [100 epochs using custom images as test data]
 
-![](./generated_assets/mnist/100EPOCHS Custom Image Results-1660071851.png)
+![](./generated_assets/mnist/100EPOCHS%20Custom%20Image%20Results-1660071851.png)
