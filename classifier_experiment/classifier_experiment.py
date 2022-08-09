@@ -27,11 +27,11 @@ class ClassifierExperiment(Experiment):
                 'Bag', # 8
                 'Ankle boot' # 9
             ],
-            'custom_image_dir': '.\classifier_experiment\custom images\*.jpg',
+            'custom_image_dir': './classifier_experiment/custom images/*.jpg',
             'labels': [0, 8, 8, 3, 2],
             'plot_opts': {
                 'save_figs': True,
-                'dir': './generated_plots/'
+                'dir': './classifier_experiment/generated_plots/'
             }
         }, **config}
 
