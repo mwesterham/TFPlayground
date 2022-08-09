@@ -4,8 +4,6 @@ This repository serves as demonstration of tensorflow model implementations and 
 experiments. A series of base classes are additionally provided in order to facilitate each experiment and generify the
 training process. An explanation of each experiment is provided below.
 
-I also provide a common framework to train tensorflow models which is adjusted as needed throughout the experiments.
-
 -  [**Classifier Experiments**](classifier_experiment/README.md)
 
 The classifier experiments are based off of Tensorflow's documentation
