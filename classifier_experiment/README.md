@@ -1,23 +1,12 @@
 # Classifier Experiment
 
-The classifier experiment is based off of Tensorflow's documentation
+The classifier experiments are based off of Tensorflow's documentation
 found [here](https://www.tensorflow.org/tutorials/keras/classification). In this experiment we implement a model that
-classifies images into 1 of 10 different classes of clothing. The framework I provide gives the user access to a number
-of configurability options that allow us to easily modify the training process. Additionally, I compiled a few custom
-images myself to be used in the evaluation process.
+classifies images into different classes for two datasets: Fashion MNIST and MNIST. Once these models were trained, they
+were evaluated with the test dataset provided by Tensorflow and a small custom dataset I compiled myself for each. The
+results from these two datasets are compared and analyzed.
 
-### Overall
-
-The model performed better when training with simpler data. This can be seen in the results below where the model
-trained on the Fashion MNIST dataset had less accuracy and more loss than the model trained with MNIST.
-
-However, the model trained on MNIST performed significantly worse on the custom datasets provided. This may indicate
-that although the model learned patterns of the simpler data much better, it will perform significantly worse on images
-that don't follow the learned patterns. This could be due to human error in creation of the datasets; it is also possible
-that the model trained on MNIST is worse at predicting data that it was not trained for, where the Fashion MNIST trained
-model did better since the patterns were more complex and likely more generalized.
-
-### Fashion MNIST dataset
+### Experiment: Classifier on Fashion MNIST dataset
 
 - **Results**
 
@@ -55,7 +44,7 @@ colored red if the predicted and real labels do not match.
 
 ![](./generated_assets/fashion_mnist/100EPOCHS%20Custom%20Image%20Results-1660071659.png)
 
-### Classifier Experiment on MNIST
+### Experiment: Classifier on MNIST dataset
 
 - **Results**
 
@@ -90,3 +79,15 @@ worse.
 [100 epochs using custom images as test data]
 
 ![](./generated_assets/mnist/100EPOCHS%20Custom%20Image%20Results-1660071851.png)
+
+### Analysis and Conclusion
+
+The model performed better when training with simpler data. This can be seen in the results below where the model
+trained on the Fashion MNIST dataset had less accuracy and more loss than the model trained with MNIST.
+
+However, the model trained on MNIST performed significantly worse on the custom datasets provided. This may indicate
+that although the model learned patterns of the simpler data much better, it will perform significantly worse on images
+that don't follow the learned patterns. This could be due to human error in creation of the datasets; it is also
+possible
+that the model trained on MNIST is worse at predicting data that it was not trained for, where the Fashion MNIST trained
+model did better since the patterns were more complex and likely more generalized.
