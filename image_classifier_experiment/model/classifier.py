@@ -1,5 +1,5 @@
 import tensorflow as tf
-from common.tf_base import TFTrainer, ModelOperator
+from image_classifier_experiment.model.tf_base import TFTrainer, ModelOperator
 
 
 class ClassifierTrainer(TFTrainer):

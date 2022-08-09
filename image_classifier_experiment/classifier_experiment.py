@@ -1,5 +1,5 @@
 from common.experiment_base import Experiment
-from classifier_experiment.model.classifier import ClassifierTrainer, ClassifierOperator
+from image_classifier_experiment.model.classifier import ClassifierTrainer, ClassifierOperator
 from PIL import Image, ImageOps
 import tensorflow as tf
 import numpy as np
@@ -19,10 +19,10 @@ class ClassifierExperiment(Experiment):
             'input_shape': (28, 28),
             'asset_opts': {
                 'save_assets': False,
-                'dir': './classifier_experiment/generated_plots/'
+                'dir': './image_classifier_experiment/generated_plots/'
             },
             'dataset': tf.keras.datasets.fashion_mnist,
-            'custom_image_dir': './classifier_experiment/custom images/fashion_mnist/*.jpg',
+            'custom_image_dir': './image_classifier_experiment/custom images/fashion_mnist/*.jpg',
             'labels': [0, 8, 8, 3, 2],
             'class_names': [
                 'T-shirt/top',  # 0
