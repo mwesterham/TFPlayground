@@ -62,10 +62,10 @@ were recorded.
 
 Observations: For the mnist test dataset, loss decreased from 1 to 10 EPOCHS indicating performance improved but at
 100 EPOCHS the loss jumped to 59.74 suggesting overfitting. For the custom test dataset, loss continuously increased
-and to be at significantly higher levels than the loss of the test dataset. This is likely due to it not following the
+to significantly higher levels than the loss of the test dataset. This is likely due to it not following the
 same patterns as the downloaded datset (I drew these images myself).
 
-Interpretation: Identical to the Fashion MNIST interpretation.The model performs worse the longer it is trained. This
+Interpretation: Identical to the Fashion MNIST interpretation. The model performs worse the longer it is trained. This
 may suggest over fitting. Since loss can also be seen to be much higher on the custom dataset, we can infer when testing
 images from the internet (that do not strictly adhere to the formatting of the fashion mnist dataset) the model performs
 worse.
