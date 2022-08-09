@@ -4,7 +4,7 @@ This repository serves as demonstration of tensorflow model implementations and 
 experiments. A series of base classes are additionally provided in order to facilitate each experiment and generify the
 training process. An explanation of each experiment is provided below.
 
--  [**Classifier Experiment on Fashion MNIST**](classifier_experiment/README.md)
+-  [**Classifier Experiments**](classifier_experiment/README.md)
 
 The classifier experiment is based off of Tensorflow's documentation
 found [here](https://www.tensorflow.org/tutorials/keras/classification). In this experiment we implement a model that
