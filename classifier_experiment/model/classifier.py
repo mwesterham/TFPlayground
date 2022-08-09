@@ -12,19 +12,14 @@ class ClassifierTrainer(TFTrainer):
             'num_classes': 10
         }, **config}
 
-        (train_images, train_labels), (test_images, test_labels) = data
         definition = {
-            'train_images': train_images,
-            'train_labels': train_labels,
-            'test_images': test_images,
-            'test_labels': test_labels,
+            'data': data,
             'config': config
         }
         super().__init__(definition)
 
     def _get_data(self):
-        fashion_mnist = tf.keras.datasets.fashion_mnist
-        return fashion_mnist.load_data()
+        return self.definition['data']
 
     def _preprocess(self, data):
         (train_images, train_labels), (test_images, test_labels) = data

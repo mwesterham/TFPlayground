@@ -138,4 +138,4 @@ dmypy.json
 /dataSources.local.xml
 
 # Custom ignored directories
-/classifier_experiment/generated_plots/
+/classifier_experiment/generated_assets/

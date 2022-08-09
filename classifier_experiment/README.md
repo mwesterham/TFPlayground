@@ -35,8 +35,8 @@ colored red if the predicted and real labels do not match.
 
 [100 epochs using the Fashion MNIST as test data]
 
-![](generated_plots/100EPOCHS%20First%2015%20Image%20Results%20test_loss%20219_7647247314453%20test_acc%200_8655999898910522-1659984932.png)
+![](generated_plots/fashion_mnist%20100EPOCHS%20First%2015%20Image%20Results%20test_loss%20219_7647247314453%20test_acc%200_8655999898910522-1659984932.png)
 
 [10 epochs using custom images as test data]
 
-![](generated_plots/10EPOCHS%20Custom%20Image%20Results%20test_loss%20162_7378692626953%20test_acc%200_4000000059604645-1659984698.png)
+![](generated_plots/fashion_mnist%2010EPOCHS%20Custom%20Image%20Results%20test_loss%20162_7378692626953%20test_acc%200_4000000059604645-1659984698.png)
