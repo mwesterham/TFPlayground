@@ -9,7 +9,7 @@ results from these two datasets are compared and analyzed.
 ### Experiment: Classifier on Fashion MNIST dataset
 
 The model was trained with a variable number of epochs and the accuracy and loss
-were recorded for both default and custom datasets. The overall results are given below. 
+were recorded for both default and custom datasets. The overall results are given below.
 
 <table>
     <tr>
@@ -122,8 +122,8 @@ were recorded for both default and custom datasets. The overall results are give
 Observations: Loss increases as EPOCHS increase. Loss is significantly higher when testing on a dataset I compiled
 myself.
 
-Interpretation: The model's performance improves until some threshold (~10 EPOCHS) after which the longer it is trained, 
-the worse it will become. This may suggest over-fitting. Loss can also be seen to be increasing with the custom dataset, 
+Interpretation: The model's performance improves until some threshold (~10 EPOCHS) after which the longer it is trained,
+the worse it will become. This may suggest over-fitting. Loss can also be seen to be increasing with the custom dataset,
 we can observe when testing
 images from the internet (that do not strictly adhere to the formatting of the fashion mnist dataset) the model performs
 worse and worse as it is trained more. This makes sense since these custom images have variations that the model
@@ -132,7 +132,7 @@ has never seen and was never trained for.
 ### Experiment: Classifier on MNIST dataset
 
 The model was trained with a variable number of epochs and the accuracy and loss
-were recorded for both default and custom datasets. The overall results are given below. 
+were recorded for both default and custom datasets. The overall results are given below.
 
 <table>
     <tr>
@@ -242,12 +242,11 @@ were recorded for both default and custom datasets. The overall results are give
     </tr>
 </table>
 
-Observations: For the mnist test dataset, loss decreased from 0 to 10 EPOCHS indicating performance improved but after
-this range the loss only rose, which suggests over-fitting. For the custom test dataset, loss continuously increased
-to significantly higher levels than the loss of the test dataset. This is likely due to it not following the
-same patterns as the downloaded dataset (I drew these images myself).
+Observations: Loss decreased from 0 to 10 EPOCHS indicating performance increase. After 10 EPOCHs, the loss only rose.
+For the custom test dataset, loss continuously increased to significantly higher levels than the loss of the test
+dataset.
 
-Interpretation: Identical to the Fashion MNIST interpretation. The model performs worse the longer it is trained. 
+Interpretation: Identical to the Fashion MNIST interpretation. The model performs worse the longer it is trained.
 Loss can also be seen to be increasing with the custom dataset, we can observe when testing
 images from the internet (that do not strictly adhere to the formatting of the mnist dataset) the model performs
 worse and worse as it is trained more.
@@ -258,10 +257,10 @@ worse and worse as it is trained more.
 ![](./readme%20images/Custom%20Data%20Fashion%20MNIST%20vs%20MNIST.png)
 
 The model performed better when training with the MNIST dataset. This can be seen in the results where the model
-trained on the Fashion MNIST dataset had higher loss than the model trained on the MNIST dataset. This can be observed 
+trained on the Fashion MNIST dataset had higher loss than the model trained on the MNIST dataset. This can be observed
 in both the default and custom test datasets.
 
-Both models trained on their datasets performed poorly on the custom data I provided. This is likely due to the fact 
-that these custom images did not closely adhere to the patterns of images in the training dataset. Additionally, 
-as more EPOCHs passed, the models did worse and worse on the custom dataset. This makes sense since as over-fitting 
+Both models trained on their datasets performed poorly on the custom data I provided. This is likely due to the fact
+that these custom images did not closely adhere to the patterns of images in the training dataset. Additionally,
+as more EPOCHs passed, the models did worse and worse on the custom dataset. This makes sense since as over-fitting
 became more prevalent, the custom images' differences with the training set would also become more obvious.
