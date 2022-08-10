@@ -8,22 +8,119 @@ results from these two datasets are compared and analyzed.
 
 ### Experiment: Classifier on Fashion MNIST dataset
 
-The overall results are given below. The model was trained with a variable number of epochs and the accuracy and loss
-were recorded.
+The model was trained with a variable number of epochs and the accuracy and loss
+were recorded for both default and custom datasets. The overall results are given below. 
 
-| Train Dataset | Test Dataset  | EPOCHS | Loss               | Accuracy            |
-|---------------|:--------------|:-------|--------------------|:--------------------|
-| fashion mnist | fashion mnist | 1      | 61.53921127319336  | 0.8395000100135803  |
-| fashion mnist | fashion mnist | 10     | 60.90907669067383  | 0.8600000143051147  |
-| fashion mnist | fashion mnist | 100    | 212.41879272460938 | 0.857699990272522   |
-| fashion mnist | custom        | 1      | 165.23138427734375 | 0.20000000298023224 |
-| fashion mnist | custom        | 10     | 170.42318725585938 | 0.20000000298023224 |
-| fashion mnist | custom        | 100    | 721.8863525390625  | 0.4000000059604645  |
+<table>
+    <tr>
+      <th rowspan="2">EPOCHS</th>
+      <th colspan="2">Default Test Data</th>
+      <th colspan="2">Custom Test Data</th>
+    </tr>
+    <tr>
+        <th>Loss</th>
+        <th>Accuracy</th>
+        <th>Loss</th>
+        <th>Accuracy</th>
+    </tr>
+    <tr>
+        <td>0</td>
+        <td>2.4360</td>
+        <td>0.1856</td>
+        <td>2.2657</td>
+        <td>0.0909</td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>0.3452</td>
+        <td>0.8754</td>
+        <td>2.8864</td>
+        <td>0.4545</td>
+    </tr>
+    <tr>
+        <td>10</td>
+        <td>0.3250</td>
+        <td>0.8870</td>
+        <td>4.0661</td>
+        <td>0.4545</td>
+    </tr>
+    <tr>
+        <td>15</td>
+        <td>0.3508</td>
+        <td>0.8841</td>
+        <td>5.0543</td>
+        <td>0.2727</td>
+    </tr>
+    <tr>
+        <td>20</td>
+        <td>0.3540</td>
+        <td>0.8859</td>
+        <td>4.5577</td>
+        <td>0.4545</td>
+    </tr>
+    <tr>
+        <td>25</td>
+        <td>0.3852</td>
+        <td>0.8889</td>
+        <td>6.8401</td>
+        <td>0.4545</td>
+    </tr>
+    <tr>
+        <td>30</td>
+        <td>0.3983</td>
+        <td>0.8913</td>
+        <td>9.4489</td>
+        <td>0.4545</td>
+    </tr>
+    <tr>
+        <td>40</td>
+        <td>0.4361</td>
+        <td>0.8924</td>
+        <td>10.1575</td>
+        <td>0.4545</td>
+    </tr>
+    <tr>
+        <td>50</td>
+        <td>0.5193</td>
+        <td>0.8866</td>
+        <td>11.4156</td>
+        <td>0.4545</td>
+    </tr>
+    <tr>
+        <td>60</td>
+        <td>0.5951</td>
+        <td>0.8817</td>
+        <td>15.1648</td>
+        <td>0.0909</td>
+    </tr>
+    <tr>
+        <td>70</td>
+        <td>0.6228</td>
+        <td>0.8838</td>
+        <td>13.7696</td>
+        <td>0.2727</td>
+    </tr>
+    <tr>
+        <td>80</td>
+        <td>0.6612</td>
+        <td>0.8891</td>
+        <td>17.1835</td>
+        <td>0.3636</td>
+    </tr>
+    <tr>
+        <td>100</td>
+        <td>0.8147</td>
+        <td>0.8869</td>
+        <td>17.8112</td>
+        <td>0.5454</td>
+    </tr>
+</table>
 
 Observations: Loss increases as EPOCHS increase. Loss is significantly higher when testing on a dataset I compiled
 myself.
 
-Interpretation: The model performs worse the longer it is trained. This may suggest over fitting. Since loss can also be
+Interpretation: The model's performance improves until some threshold (~10 EPOCHS) after which the longer it is trained, 
+the worse it will become. This may suggest over fitting. Since loss can also be
 seen to be much higher on the custom dataset, we can infer when testing images from the internet (that do not strictly
 adhere to the formatting of the fashion mnist dataset) the model performs worse.
 
@@ -32,14 +129,110 @@ adhere to the formatting of the fashion mnist dataset) the model performs worse.
 The overall results are given below. The model was trained with a variable number of epochs and the accuracy and loss
 were recorded.
 
-| Train Dataset | Test Dataset | EPOCHS | Loss               | Accuracy           |
-|---------------|:-------------|:-------|--------------------|:-------------------|
-| mnist         | mnist        | 1      | 19.780439376831055 | 0.95660001039505   |
-| mnist         | mnist        | 10     | 15.685311317443848 | 0.9776999950408936 |
-| mnist         | mnist        | 100    | 59.741580963134766 | 0.9789000153541565 |
-| mnist         | custom       | 1      | 647.4493408203125  | 0.6000000238418579 |
-| mnist         | custom       | 10     | 1428.693603515625  | 0.6000000238418579 |
-| mnist         | custom       | 100    | 7887.95947265625   | 0.4000000059604645 |
+<table>
+    <tr>
+      <th rowspan="2">EPOCHS</th>
+      <th colspan="2">Default Test Data</th>
+      <th colspan="2">Custom Test Data</th>
+    </tr>
+    <tr>
+        <th>Loss</th>
+        <th>Accuracy</th>
+        <th>Loss</th>
+        <th>Accuracy</th>
+    </tr>
+    <tr>
+        <td>0</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>10</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>15</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>20</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>25</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>30</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>40</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>50</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>60</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>70</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>80</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>100</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+</table>
 
 Observations: For the mnist test dataset, loss decreased from 1 to 10 EPOCHS indicating performance improved but at
 100 EPOCHS the loss jumped to 59.74 suggesting overfitting. For the custom test dataset, loss continuously increased
@@ -48,10 +241,13 @@ same patterns as the downloaded datset (I drew these images myself).
 
 Interpretation: Identical to the Fashion MNIST interpretation. The model performs worse the longer it is trained. This
 may suggest over fitting. Since loss can also be seen to be much higher on the custom dataset, we can infer when testing
-images from the internet (that do not strictly adhere to the formatting of the fashion mnist dataset) the model performs
+images from the internet (that do not strictly adhere to the formatting of the mnist dataset) the model performs
 worse.
 
-### Analysis and Conclusion
+### Comparison and Analysis
+
+![](./readme%20images/Test%20Data%20Fashion%20MNIST%20vs%20MNIST.png)
+![](./readme%20images/Custom%20Data%20Fashion%20MNIST%20vs%20MNIST.png)
 
 The model performed better when training with simpler data. This can be seen in the results below where the model
 trained on the Fashion MNIST dataset had less accuracy and more loss than the model trained with MNIST.
