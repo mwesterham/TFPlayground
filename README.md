@@ -1,6 +1,6 @@
-# Tensorflow Playground
+# Machine Learning Sandbox
 
-This repository serves as demonstration of tensorflow model implementations and ML concepts in the form of different
+This repository serves as demonstration of TensorFlow model implementations and ML concepts in the form of different
 experiments. A series of base classes are additionally provided in order to facilitate each experiment and generify the
 training process. An explanation of each experiment is provided below.
 
