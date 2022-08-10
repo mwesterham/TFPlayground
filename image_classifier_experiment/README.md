@@ -13,6 +13,9 @@ were recorded for both default and custom datasets. The overall results are give
 
 <table>
     <tr>
+      <th colspan="5">Fashion MNIST Dataset</th>
+    </tr>
+    <tr>
       <th rowspan="2">EPOCHS</th>
       <th colspan="2">Default Test Data</th>
       <th colspan="2">Custom Test Data</th>
@@ -131,6 +134,9 @@ were recorded.
 
 <table>
     <tr>
+      <th colspan="5">MNIST Dataset</th>
+    </tr>
+    <tr>
       <th rowspan="2">EPOCHS</th>
       <th colspan="2">Default Test Data</th>
       <th colspan="2">Custom Test Data</th>
@@ -143,94 +149,94 @@ were recorded.
     </tr>
     <tr>
         <td>0</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>2.3050</td>
+        <td>0.1516</td>
+        <td>2.2848</td>
+        <td>0.2727</td>
     </tr>
     <tr>
         <td>5</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>0.0821</td>
+        <td>0.9753</td>
+        <td>3.1627</td>
+        <td>0.6363</td>
     </tr>
     <tr>
         <td>10</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>0.0804</td>
+        <td>0.9771</td>
+        <td>3.5345</td>
+        <td>0.7272</td>
     </tr>
     <tr>
         <td>15</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>0.0947</td>
+        <td>0.9772</td>
+        <td>5.7048</td>
+        <td>0.7272</td>
     </tr>
     <tr>
         <td>20</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>0.1042</td>
+        <td>0.9797</td>
+        <td>6.5124</td>
+        <td>0.7272</td>
     </tr>
     <tr>
         <td>25</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>0.1160</td>
+        <td>0.9797</td>
+        <td>8.5554</td>
+        <td>0.7272</td>
     </tr>
     <tr>
         <td>30</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>0.1439</td>
+        <td>0.9764</td>
+        <td>7.5284</td>
+        <td>0.8181</td>
     </tr>
     <tr>
         <td>40</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>0.1577</td>
+        <td>0.9779</td>
+        <td>8.2524</td>
+        <td>0.7272</td>
     </tr>
     <tr>
         <td>50</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>0.1977</td>
+        <td>0.9763</td>
+        <td>13.0131</td>
+        <td>0.7272</td>
     </tr>
     <tr>
         <td>60</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>0.1721</td>
+        <td>0.9768</td>
+        <td>9.8029</td>
+        <td>0.8181</td>
     </tr>
     <tr>
         <td>70</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>0.2294</td>
+        <td>0.9753</td>
+        <td>12.9371</td>
+        <td>0.7272</td>
     </tr>
     <tr>
         <td>80</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>0.1895</td>
+        <td>0.9787</td>
+        <td>9.3681</td>
+        <td>0.7272</td>
     </tr>
     <tr>
         <td>100</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>0.2563</td>
+        <td>0.9775</td>
+        <td>13.8714</td>
+        <td>0.6363</td>
     </tr>
 </table>
 
