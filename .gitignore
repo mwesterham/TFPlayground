@@ -139,3 +139,4 @@ dmypy.json
 
 # Custom ignored directories
 /image_classifier_experiment/generated_assets/
+/text_binary_classifier_experiment/cache

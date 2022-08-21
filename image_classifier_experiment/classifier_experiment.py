@@ -40,7 +40,9 @@ class ClassifierExperiment(Experiment):
 
         self.config = config
 
-    def execute(self):
+        super().__init__()
+
+    def _execute(self):
         """Executes the training then returns results like (test_image_results, custom_image_results)"""
 
         # grab the dataset from the config
@@ -243,7 +245,7 @@ def run_classifier_experiment():
                 'Ankle boot'  # 9
             ],
         })
-        test_image_results1, custom_image_results1 = experiment1.execute()
+        test_image_results1, custom_image_results1 = experiment1.run()
         experiment1_results['test']['loss'].append(test_image_results1['loss'])
         experiment1_results['test']['accuracy'].append(test_image_results1['accuracy'])
         experiment1_results['custom']['loss'].append(custom_image_results1['loss'])
@@ -272,7 +274,7 @@ def run_classifier_experiment():
                 '9'  # 9
             ],
         })
-        test_image_results2, custom_image_results2 = experiment2.execute()
+        test_image_results2, custom_image_results2 = experiment2.run()
         experiment2_results['test']['loss'].append(test_image_results2['loss'])
         experiment2_results['test']['accuracy'].append(test_image_results2['accuracy'])
         experiment2_results['custom']['loss'].append(custom_image_results2['loss'])
