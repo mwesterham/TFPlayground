@@ -68,7 +68,7 @@ class ClassifierExperiment(Experiment):
         predictions_array = OPERATOR.use(test_images)
 
         # plot the predictions against the real labels and save if desired
-        self.plot_multi_predictions(predictions_array,
+        self.__plot_multi_predictions(predictions_array,
                                     test_labels,
                                     test_images,
                                     15,
@@ -107,7 +107,7 @@ class ClassifierExperiment(Experiment):
         (custom_test_loss, custom_test_acc) = OPERATOR.evaluate((custom_imgs, np.array(correct_labels)))
 
         # plot the custom predictions and save if desired
-        self.plot_multi_predictions(custom_predictions_array,
+        self.__plot_multi_predictions(custom_predictions_array,
                                     correct_labels,
                                     custom_imgs,
                                     len(correct_labels),
@@ -123,7 +123,9 @@ class ClassifierExperiment(Experiment):
 
         return test_image_results, custom_image_results
 
-    def plot_image(self, predictions_array, true_label, img):
+    def __plot_image(self, predictions_array, true_label, img):
+        """Plots a single image with the predicted and true label"""
+
         plt.grid(False)
         plt.xticks([])
         plt.yticks([])
@@ -141,7 +143,9 @@ class ClassifierExperiment(Experiment):
                                              self.config['class_names'][true_label]),
                    color=color)
 
-    def plot_value_array(self, predictions_array, true_label):
+    def __plot_value_array(self, predictions_array, true_label):
+        """Plots the predicted liklihoods of each class"""
+
         plt.grid(False)
         plt.xticks(range(10))
         plt.yticks([])
@@ -152,8 +156,10 @@ class ClassifierExperiment(Experiment):
         thisplot[predicted_label].set_color('red')
         thisplot[true_label].set_color('blue')
 
-    def plot_multi_predictions(self, predictions, test_labels, test_images, num_images,
+    def __plot_multi_predictions(self, predictions, test_labels, test_images, num_images,
                                plot_title="Multi Prediction Results"):
+        """Plots multiple images and their class probabilities that the model provided"""
+
         # Plot the first X test images, their predicted labels, and the true labels.
         # Color correct predictions in blue and incorrect predictions in red.
         num_rows = math.ceil(num_images / 3)
@@ -163,14 +169,16 @@ class ClassifierExperiment(Experiment):
 
         for i in range(num_images):
             plt.subplot(num_rows, 2 * num_cols, 2 * i + 1)
-            self.plot_image(predictions[i], test_labels[i], test_images[i])
+            self.__plot_image(predictions[i], test_labels[i], test_images[i])
             plt.subplot(num_rows, 2 * num_cols, 2 * i + 2)
-            self.plot_value_array(predictions[i], test_labels[i])
+            self.__plot_value_array(predictions[i], test_labels[i])
         plt.tight_layout()
 
         self.__print_plot(plot_title)
 
     def __print_plot(self, prefix):
+        """Saves the plot if desired, then prints"""
+
         if self.config['asset_opts']['save_assets']:
             plot_name = f"{self.config['asset_opts']['dir']}{self.config['EPOCHS']}EPOCHS {prefix}-{int(time.time())}.png"
             print(f"saving plot... ({plot_name})")
@@ -179,6 +187,8 @@ class ClassifierExperiment(Experiment):
         plt.show()
 
     def __print_dict(self, prefix, dict):
+        """Saves a given dictionary to the asset directory if desired then prints"""
+
         if self.config['asset_opts']['save_assets']:
             asset_name = f"{self.config['asset_opts']['dir']}{prefix}-{int(time.time())}.csv"
             print(f"saving asset... ({asset_name})")
@@ -193,6 +203,8 @@ class ClassifierExperiment(Experiment):
 
 
 def run_classifier_experiment():
+    """Function to run the image classifier experiment"""
+
     # Based off of https://www.tensorflow.org/tutorials/keras/classification
 
     epoch_list = [0, 5, 10, 15, 20, 25, 30, 40, 50, 60, 70, 80, 100]
