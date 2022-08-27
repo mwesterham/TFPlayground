@@ -1,8 +1,8 @@
 import tensorflow as tf
-from image_classifier_experiment.model.tf_base import TFTrainer, ModelOperator
+from common.tf_base import TFTrainer, ModelOperator
 
 
-class ClassifierTrainer(TFTrainer):
+class ImageClassifierTrainer(TFTrainer):
     def __init__(self, data, config={}):
         # merge dictionaries with second overwriting the first
         config = {**{
@@ -21,8 +21,16 @@ class ClassifierTrainer(TFTrainer):
     def _get_data(self):
         return self.definition['data']
 
-    def preprocess(self, data):
-        return data / 255.0
+    def _preprocess(self, data):
+        (train_images, train_labels), (test_images, test_labels) = data
+
+        factor = 255.0
+
+        processed_data = (
+            (train_images / factor, train_labels),
+            (test_images / factor, test_labels)
+        )
+        return processed_data
 
     def _get_tf_model(self):
         # get definitions
@@ -51,6 +59,15 @@ class ClassifierTrainer(TFTrainer):
 
         # train model
         model.fit(train_images, train_labels, epochs=epochs)
+
+    def manual_preprocess(self, data):
+        """
+        Public function to allow the trainer to manually preprocess data
+
+        :param data: data to preprocess, numpy array-like
+        :return: preprocessed data
+        """
+        return data / 255.0
 
 
 class ClassifierOperator(ModelOperator):

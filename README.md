@@ -2,9 +2,9 @@
 
 This repository serves as demonstration of TensorFlow model implementations and ML concepts in the form of different
 experiments. A series of base classes are additionally provided in order to facilitate each experiment and generify the
-training process. An explanation of each experiment is provided below.
+training process. An explanation of each experiment is provided below. TensorFlow 2.8.2 is used in each experiment.
 
--  [**Classifier Experiments**](image_classifier_experiment/README.md)
+- [**Classifier Experiments**](image_classifier_experiment/README.md)
 
 The classifier experiments are based off of Tensorflow's documentation
 found [here](https://www.tensorflow.org/tutorials/keras/classification). In this experiment we implement a model that

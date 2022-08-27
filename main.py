@@ -6,4 +6,4 @@ if __name__ == '__main__':
     run_classifier_experiment()
 
     # Text classifier experiment
-    run_text_classifier_experiment()
+    # run_text_classifier_experiment()

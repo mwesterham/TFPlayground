@@ -1,5 +1,5 @@
 from common.experiment_base import Experiment
-from image_classifier_experiment.model.classifier import ClassifierTrainer, ClassifierOperator
+from image_classifier_experiment.model.classifier import ImageClassifierTrainer, ClassifierOperator
 from PIL import Image, ImageOps
 import tensorflow as tf
 import numpy as np
@@ -49,7 +49,7 @@ class ClassifierExperiment(Experiment):
         dataset = self.config['dataset']
 
         # build the trainer and execute the training with the dataset given
-        TRAINER = ClassifierTrainer(dataset.load_data(), config={
+        TRAINER = ImageClassifierTrainer(dataset.load_data(), config={
             'input_shape': self.config['input_shape'],
             'nodes': 128,
             'EPOCHS': self.config['EPOCHS'],
@@ -69,10 +69,10 @@ class ClassifierExperiment(Experiment):
 
         # plot the predictions against the real labels and save if desired
         self.__plot_multi_predictions(predictions_array,
-                                    test_labels,
-                                    test_images,
-                                    15,
-                                    plot_title="First 15 Image Results")
+                                      test_labels,
+                                      test_images,
+                                      15,
+                                      plot_title="First 15 Image Results")
 
         # print the loss and save to a csv file if desired
         test_image_results = {
@@ -93,7 +93,7 @@ class ClassifierExperiment(Experiment):
             img = np.asarray(img)
 
             # once converted use the trainer's preprocessing function as well
-            img = TRAINER.preprocess(img)
+            img = TRAINER.manual_preprocess(img)
 
             # append post processed images to an array
             custom_imgs.append(img)
@@ -108,10 +108,10 @@ class ClassifierExperiment(Experiment):
 
         # plot the custom predictions and save if desired
         self.__plot_multi_predictions(custom_predictions_array,
-                                    correct_labels,
-                                    custom_imgs,
-                                    len(correct_labels),
-                                    plot_title="Custom Image Results")
+                                      correct_labels,
+                                      custom_imgs,
+                                      len(correct_labels),
+                                      plot_title="Custom Image Results")
 
         # print the loss and save if desired
         custom_image_results = {
@@ -157,7 +157,7 @@ class ClassifierExperiment(Experiment):
         thisplot[true_label].set_color('blue')
 
     def __plot_multi_predictions(self, predictions, test_labels, test_images, num_images,
-                               plot_title="Multi Prediction Results"):
+                                 plot_title="Multi Prediction Results"):
         """Plots multiple images and their class probabilities that the model provided"""
 
         # Plot the first X test images, their predicted labels, and the true labels.
