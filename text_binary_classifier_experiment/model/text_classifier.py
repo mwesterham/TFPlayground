@@ -15,11 +15,17 @@ class TextClassifierTrainer(TFTrainer):
             'validation_split': 0.2,
             'max_features': 10000,
             'sequence_length': 250,
-
         }, **config}
+
+        vectorize_layer = layers.TextVectorization(
+            standardize=self.__custom_standardization,
+            max_tokens=config['max_features'],
+            output_mode='int',
+            output_sequence_length=config['sequence_length'])
 
         definition = {
             'data_dir': data_dir,
+            'vectorize_layer': vectorize_layer,
             'config': config
         }
         super().__init__(definition)
@@ -49,19 +55,14 @@ class TextClassifierTrainer(TFTrainer):
             test_dir,
             batch_size=batch_size)
 
+        print("Label 0 corresponds to", raw_train_ds.class_names[0])
+        print("Label 1 corresponds to", raw_train_ds.class_names[1])
+
         return raw_train_ds, raw_val_ds, raw_test_ds
 
     def _preprocess(self, data):
         raw_train_ds, raw_val_ds, raw_test_ds = data
-
-        max_features = self.definition['config']['max_features']
-        sequence_length = self.definition['config']['sequence_length']
-
-        vectorize_layer = layers.TextVectorization(
-            standardize=self.__custom_standardization,
-            max_tokens=max_features,
-            output_mode='int',
-            output_sequence_length=sequence_length)
+        vectorize_layer = self.definition['vectorize_layer']
 
         # Make a text-only dataset (without labels), then call adapt
         train_text = raw_train_ds.map(lambda x, y: x)
@@ -111,7 +112,7 @@ class TextClassifierTrainer(TFTrainer):
                                         '')
 
 
-class ClassifierOperator(ModelOperator):
+class TextClassifierOperator(ModelOperator):
     def __init__(self, model, definition={}):
         # merge dictionaries with second overwriting the first
         definition = {**{}, **definition}
@@ -120,20 +121,27 @@ class ClassifierOperator(ModelOperator):
 
     def evaluate(self, params):
         """
-        Params must provide the test images and labels
+        Params must provide the test dataset
 
-        :param params: params like (test_images, test_labels)
+        :param params: params like (train_ds, val_ds, test_ds)
         :return: loss and accuracy like (test_loss, test_acc)
         """
-        # get images and labels
-        (test_images, test_labels) = params
+        _, _, test_ds = params
 
         # evaluate the model
-        test_loss, test_acc = self.model.evaluate(test_images, test_labels, verbose=2)
-        return test_loss, test_acc
+        loss, accuracy = self.model.evaluate(test_ds)
+        return loss, accuracy
 
     def use(self, input_data, config=None):
-        probability_model = tf.keras.Sequential([self.model,
-                                                 tf.keras.layers.Softmax()])
-        predictions = probability_model.predict(input_data)
+        raw_process_model = tf.keras.Sequential([
+            config['vectorize_layer'],
+            self.model,
+            layers.Activation('sigmoid')
+        ])
+
+        raw_process_model.compile(
+            loss=losses.BinaryCrossentropy(from_logits=False), optimizer="adam", metrics=['accuracy']
+        )
+
+        predictions = raw_process_model.predict(input_data)
         return predictions
