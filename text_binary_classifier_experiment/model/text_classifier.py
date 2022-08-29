@@ -16,6 +16,7 @@ class TextClassifierTrainer(TFTrainer):
             'validation_split': 0.2,
             'max_features': 10000,
             'sequence_length': 250,
+            'EPOCHS': 10,
         }, **config}
 
         vectorize_layer = layers.TextVectorization(
@@ -99,7 +100,7 @@ class TextClassifierTrainer(TFTrainer):
     def _train_tf_model(self, model, processed_data):
         train_ds, val_ds, test_ds = processed_data
 
-        epochs = 10
+        epochs = self.definition['config']['EPOCHS']
         history = model.fit(
             train_ds,
             validation_data=val_ds,

@@ -34,7 +34,9 @@ class BinaryClassifierExperiment(Experiment):
         dataset_dir = Path(self.config["cache_dir"]) / 'aclImdb'
 
         # Instantiate and run the trainer
-        TRAINER = TextClassifierTrainer(dataset_dir)
+        TRAINER = TextClassifierTrainer(dataset_dir, config={
+            'EPOCHS': 15,
+        })
         processed_data, trained_tf_model, history = TRAINER.run()
 
         # Evaluate the model
@@ -64,7 +66,7 @@ class BinaryClassifierExperiment(Experiment):
 
 def run_text_classifier_experiment():
     classifier1 = BinaryClassifierExperiment(config={
-        "download_data": False
+        "download_data": False,
     })
     classifier1.run()
     print("--- Runtime: %s seconds ---" % classifier1.runtime)
