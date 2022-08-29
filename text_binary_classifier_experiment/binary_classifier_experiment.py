@@ -35,7 +35,7 @@ class BinaryClassifierExperiment(Experiment):
 
         # Instantiate and run the trainer
         TRAINER = TextClassifierTrainer(dataset_dir)
-        processed_data, trained_tf_model = TRAINER.run()
+        processed_data, trained_tf_model, history = TRAINER.run()
 
         # Evaluate the model
         OPERATOR = TextClassifierOperator(trained_tf_model)
@@ -52,6 +52,8 @@ class BinaryClassifierExperiment(Experiment):
 
         ])
         print(predictions)
+
+        OPERATOR.plot(history)
 
     def __print_file(self, filepath):
         """Helper function that can print the contents of an individual file"""

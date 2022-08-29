@@ -1,4 +1,5 @@
 import tensorflow as tf
+import matplotlib.pyplot as plt
 from common.tf_base import TFTrainer, ModelOperator
 
 
@@ -58,7 +59,8 @@ class ImageClassifierTrainer(TFTrainer):
         (train_images, train_labels), (test_images, test_labels) = processed_data
 
         # train model
-        model.fit(train_images, train_labels, epochs=epochs)
+        history = model.fit(train_images, train_labels, epochs=epochs)
+        return history
 
     def manual_preprocess(self, data):
         """
@@ -96,3 +98,29 @@ class ClassifierOperator(ModelOperator):
                                                  tf.keras.layers.Softmax()])
         predictions = probability_model.predict(input_data)
         return predictions
+
+    def plot(self, history):
+        history_dict = history.history
+
+        acc = history_dict['accuracy']
+        loss = history_dict['loss']
+
+        epochs = range(1, len(acc) + 1)
+
+        # Plot the loss
+        plt.plot(epochs, loss, marker='o', color='r', label='Training loss')
+        plt.title('Training loss')
+        plt.xlabel('Epochs')
+        plt.ylabel('Loss')
+        plt.legend()
+
+        plt.show()
+
+        # Plot the accuracy
+        plt.plot(epochs, acc, marker='o', color='r', label='Training acc')
+        plt.title('Training accuracy')
+        plt.xlabel('Epochs')
+        plt.ylabel('Accuracy')
+        plt.legend(loc='lower right')
+
+        plt.show()

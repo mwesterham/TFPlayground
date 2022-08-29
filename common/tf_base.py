@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
 
-
 class TFTrainer(ABC):
     """
     An abstraction for training tensorflow models
@@ -13,13 +12,13 @@ class TFTrainer(ABC):
         """
         Trains a tf model according to class definition
 
-        :return: tuple like (processed_data, trained_tf_model)
+        :return: tuple like (processed_data, trained_tf_model, history)
         """
         data = self._get_data()
         processed_data = self._preprocess(data)
         tf_model = self._get_tf_model()
-        self._train_tf_model(tf_model, processed_data)
-        return processed_data, tf_model
+        history = self._train_tf_model(tf_model, processed_data)
+        return processed_data, tf_model, history
 
     @abstractmethod
     def _get_data(self):
@@ -58,6 +57,7 @@ class TFTrainer(ABC):
 
         :param model: the tf model to train with
         :param processed_data: the processed data to train on
+        :return: a history object obtained from training
         """
         pass
 
@@ -89,5 +89,14 @@ class ModelOperator(ABC):
         :param input: input data into the model
         :param config: defines any configuration needed to operate with the model
         :return: the output of the model
+        """
+        pass
+
+    @abstractmethod
+    def plot(self, history):
+        """
+        Helper function to plot the model's performance
+
+        :param history: history object obtained from the model training
         """
         pass

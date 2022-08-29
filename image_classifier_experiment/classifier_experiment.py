@@ -55,10 +55,14 @@ class ClassifierExperiment(Experiment):
             'EPOCHS': self.config['EPOCHS'],
             'num_classes': len(self.config['class_names'])
         })
-        (processed_data, trained_tf_model) = TRAINER.run()
+        (processed_data, trained_tf_model, history) = TRAINER.run()
 
         # build an operator instance with the trained model
         OPERATOR = ClassifierOperator(trained_tf_model)
+
+        # Plot loss and accuracy if able to
+        if len(history.history.keys()) > 0:
+            OPERATOR.plot(history)
 
         # evaluate the model
         _, (test_images, test_labels) = processed_data

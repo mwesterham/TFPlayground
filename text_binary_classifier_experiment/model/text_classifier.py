@@ -1,6 +1,7 @@
 import tensorflow as tf
 from tensorflow.keras import layers
 from tensorflow.keras import losses
+import matplotlib.pyplot as plt
 import re
 import string
 from common.tf_base import TFTrainer, ModelOperator
@@ -103,6 +104,7 @@ class TextClassifierTrainer(TFTrainer):
             train_ds,
             validation_data=val_ds,
             epochs=epochs)
+        return history
 
     def __custom_standardization(self, input_data):
         lowercase = tf.strings.lower(input_data)
@@ -113,6 +115,7 @@ class TextClassifierTrainer(TFTrainer):
 
 
 class TextClassifierOperator(ModelOperator):
+
     def __init__(self, model, definition={}):
         # merge dictionaries with second overwriting the first
         definition = {**{}, **definition}
@@ -145,3 +148,35 @@ class TextClassifierOperator(ModelOperator):
 
         predictions = raw_process_model.predict(input_data)
         return predictions
+
+    def plot(self, history):
+        history_dict = history.history
+
+        acc = history_dict['binary_accuracy']
+        val_acc = history_dict['val_binary_accuracy']
+        loss = history_dict['loss']
+        val_loss = history_dict['val_loss']
+
+        epochs = range(1, len(acc) + 1)
+
+        # Plot the loss
+        # "bo" is for "blue dot"
+        plt.plot(epochs, loss, 'bo', label='Training loss')
+        # b is for "solid blue line"
+        plt.plot(epochs, val_loss, 'b', label='Validation loss')
+        plt.title('Training and validation loss')
+        plt.xlabel('Epochs')
+        plt.ylabel('Loss')
+        plt.legend()
+
+        plt.show()
+
+        # Plot the accuracy
+        plt.plot(epochs, acc, 'bo', label='Training acc')
+        plt.plot(epochs, val_acc, 'b', label='Validation acc')
+        plt.title('Training and validation accuracy')
+        plt.xlabel('Epochs')
+        plt.ylabel('Accuracy')
+        plt.legend(loc='lower right')
+
+        plt.show()
