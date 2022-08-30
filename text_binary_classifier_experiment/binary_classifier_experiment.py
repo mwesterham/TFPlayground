@@ -40,7 +40,9 @@ class BinaryClassifierExperiment(Experiment):
         processed_data, trained_tf_model, history = TRAINER.run()
 
         # Evaluate the model
-        OPERATOR = TextClassifierOperator(trained_tf_model)
+        OPERATOR = TextClassifierOperator(trained_tf_model, definition={
+            'save_assets': True,
+        })
         loss, accuracy = OPERATOR.evaluate(processed_data)
 
         print("Loss: ", loss)

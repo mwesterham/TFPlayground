@@ -2,8 +2,11 @@ import tensorflow as tf
 from tensorflow.keras import layers
 from tensorflow.keras import losses
 import matplotlib.pyplot as plt
+import time
 import re
 import string
+import os
+from pathlib import Path
 from common.tf_base import TFTrainer, ModelOperator
 
 
@@ -119,7 +122,10 @@ class TextClassifierOperator(ModelOperator):
 
     def __init__(self, model, definition={}):
         # merge dictionaries with second overwriting the first
-        definition = {**{}, **definition}
+        definition = {**{
+            'save_assets': True,
+            'asset_dir': './text_binary_classifier_experiment/cache/generated_assets/',
+        }, **definition}
 
         super().__init__(model, definition)
 
@@ -158,26 +164,43 @@ class TextClassifierOperator(ModelOperator):
         loss = history_dict['loss']
         val_loss = history_dict['val_loss']
 
-        epochs = range(1, len(acc) + 1)
+        epoch_num = len(acc)
+        epochs = range(1, epoch_num + 1)
 
         # Plot the loss
         # "bo" is for "blue dot"
-        plt.plot(epochs, loss, 'bo', label='Training loss')
+        plt.plot(epochs, loss, color='blue', label='Training loss')
         # b is for "solid blue line"
-        plt.plot(epochs, val_loss, 'b', label='Validation loss')
+        plt.plot(epochs, val_loss, color='orange', label='Validation loss')
         plt.title('Training and validation loss')
         plt.xlabel('Epochs')
         plt.ylabel('Loss')
         plt.legend()
 
+        if(self.definition['save_assets']):
+            plot_name = f"{self.definition['asset_dir']}{'Training and validation loss'}-{epoch_num}EPOCHS-{int(time.time())}.png"
+            self.save_plot(plot_name)
         plt.show()
 
         # Plot the accuracy
-        plt.plot(epochs, acc, 'bo', label='Training acc')
-        plt.plot(epochs, val_acc, 'b', label='Validation acc')
+        plt.plot(epochs, acc, color='blue', label='Training acc')
+        plt.plot(epochs, val_acc, color='orange', label='Validation acc')
         plt.title('Training and validation accuracy')
         plt.xlabel('Epochs')
         plt.ylabel('Accuracy')
         plt.legend(loc='lower right')
 
+        if (self.definition['save_assets']):
+            plot_name = f"{self.definition['asset_dir']}{'Training and validation accuracy'}-{epoch_num}EPOCHS-{int(time.time())}.png"
+            self.save_plot(plot_name)
         plt.show()
+
+    def save_plot(self, plot_name):
+        path = Path(self.definition['asset_dir'])
+        if not os.path.exists(path):
+            # Create a new directory because it does not exist
+            os.makedirs(path)
+            print(f"The new directory ({path}) is created!")
+
+        print(f"saving plot... ({plot_name})")
+        plt.savefig(plot_name)
