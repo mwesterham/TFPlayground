@@ -1,6 +1,6 @@
 # Classifier Experiment
 
-The classifier experiments are based off of Tensorflow's documentation
+The image classifier experiments are based off of Tensorflow's documentation
 found [here](https://www.tensorflow.org/tutorials/keras/classification). In this experiment we implement a model that
 classifies images into different classes for two datasets: Fashion MNIST and MNIST. Once these models were trained, they
 were evaluated with the test dataset provided by Tensorflow and a small custom dataset I compiled myself for each. The

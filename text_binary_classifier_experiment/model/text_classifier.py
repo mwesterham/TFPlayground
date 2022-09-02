@@ -20,6 +20,7 @@ class TextClassifierTrainer(TFTrainer):
             'max_features': 10000,
             'sequence_length': 250,
             'EPOCHS': 10,
+            'checkpoint_dir': './text_binary_classifier_experiment/cache/ckpt/',
         }, **config}
 
         vectorize_layer = layers.TextVectorization(
@@ -103,11 +104,20 @@ class TextClassifierTrainer(TFTrainer):
     def _train_tf_model(self, model, processed_data):
         train_ds, val_ds, test_ds = processed_data
 
+        checkpoint_path = self.definition['config']['checkpoint_dir']
+
+        # Create a callback that saves the model's weights
+        cp_callback = tf.keras.callbacks.ModelCheckpoint(filepath=checkpoint_path,
+                                                         save_weights_only=True,
+                                                         save_best_only=False,
+                                                         verbose=1)
+
         epochs = self.definition['config']['EPOCHS']
         history = model.fit(
             train_ds,
             validation_data=val_ds,
-            epochs=epochs)
+            epochs=epochs,
+            callbacks=[cp_callback])
         return history
 
     def __custom_standardization(self, input_data):
@@ -123,7 +133,6 @@ class TextClassifierOperator(ModelOperator):
     def __init__(self, model, definition={}):
         # merge dictionaries with second overwriting the first
         definition = {**{
-            'save_assets': True,
             'asset_dir': './text_binary_classifier_experiment/cache/generated_assets/',
         }, **definition}
 
@@ -156,9 +165,10 @@ class TextClassifierOperator(ModelOperator):
         predictions = raw_process_model.predict(input_data)
         return predictions
 
-    def plot(self, history):
-        history_dict = history.history
+    def load_weights(self, checkpoint_filepath):
+        self.model.load_weights(checkpoint_filepath)
 
+    def plot(self, history_dict, save_assets = False):
         acc = history_dict['binary_accuracy']
         val_acc = history_dict['val_binary_accuracy']
         loss = history_dict['loss']
@@ -177,9 +187,9 @@ class TextClassifierOperator(ModelOperator):
         plt.ylabel('Loss')
         plt.legend()
 
-        if(self.definition['save_assets']):
+        if(save_assets):
             plot_name = f"{self.definition['asset_dir']}{'Training and validation loss'}-{epoch_num}EPOCHS-{int(time.time())}.png"
-            self.save_plot(plot_name)
+            self.__save_plot(plot_name)
         plt.show()
 
         # Plot the accuracy
@@ -190,12 +200,12 @@ class TextClassifierOperator(ModelOperator):
         plt.ylabel('Accuracy')
         plt.legend(loc='lower right')
 
-        if (self.definition['save_assets']):
+        if(save_assets):
             plot_name = f"{self.definition['asset_dir']}{'Training and validation accuracy'}-{epoch_num}EPOCHS-{int(time.time())}.png"
-            self.save_plot(plot_name)
+            self.__save_plot(plot_name)
         plt.show()
 
-    def save_plot(self, plot_name):
+    def __save_plot(self, plot_name):
         path = Path(self.definition['asset_dir'])
         if not os.path.exists(path):
             # Create a new directory because it does not exist

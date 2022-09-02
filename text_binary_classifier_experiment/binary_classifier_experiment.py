@@ -1,6 +1,7 @@
 import tensorflow as tf
 import shutil
 from pathlib import Path
+import json
 
 from text_binary_classifier_experiment.model.text_classifier import TextClassifierTrainer, TextClassifierOperator
 from common.experiment_base import Experiment
@@ -35,14 +36,12 @@ class BinaryClassifierExperiment(Experiment):
 
         # Instantiate and run the trainer
         TRAINER = TextClassifierTrainer(dataset_dir, config={
-            'EPOCHS': 15,
+            'EPOCHS': 25,
         })
         processed_data, trained_tf_model, history = TRAINER.run()
 
         # Evaluate the model
-        OPERATOR = TextClassifierOperator(trained_tf_model, definition={
-            'save_assets': True,
-        })
+        OPERATOR = TextClassifierOperator(trained_tf_model)
         loss, accuracy = OPERATOR.evaluate(processed_data)
 
         print("Loss: ", loss)
@@ -57,7 +56,12 @@ class BinaryClassifierExperiment(Experiment):
         ])
         print(predictions)
 
-        OPERATOR.plot(history)
+        OPERATOR.plot(history.history, save_assets=True)
+
+        history_file = Path(self.config["cache_dir"]) / 'generated_assets' / 'history.json'
+        print(f"saving history... {history_file}")
+        with open(history_file, 'w') as f:
+            json.dump(history.history, f)
 
     def __print_file(self, filepath):
         """Helper function that can print the contents of an individual file"""
