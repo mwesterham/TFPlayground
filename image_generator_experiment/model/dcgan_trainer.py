@@ -1,13 +1,13 @@
 import tensorflow as tf
 from tensorflow.keras import layers
 import matplotlib.pyplot as plt
-import numpy as np
 import time
 import os
 from pathlib import Path
 from common.tf_base import TFTrainer, ModelOperator
 
 from IPython import display
+
 
 class DCGANTrainer(TFTrainer):
     def __init__(self, data, config={}):
@@ -50,29 +50,18 @@ class DCGANTrainer(TFTrainer):
         return train_dataset
 
     def _get_tf_model(self):
-        generator = self.__make_generator_model()
-        discriminator = self.__make_discriminator_model()
+        generator = DCGANTrainer.make_generator_model()
+        discriminator = DCGANTrainer.make_discriminator_model()
         return generator, discriminator
 
     def _train_tf_model(self, model, processed_data):
         (generator, discriminator) = model
-
-        # generator test
-        # noise = tf.random.normal([1, 100])
-        # generated_image = generator(noise, training=False)
-        # plt.imshow(generated_image[0, :, :, 0], cmap='gray')
-        # plt.show()
-
-        # discriminator test
-        # decision = discriminator(generated_image)
-        # print(decision)
 
         generator_optimizer = tf.keras.optimizers.Adam(1e-4)
         discriminator_optimizer = tf.keras.optimizers.Adam(1e-4)
 
         checkpoint_dir = Path(self.definition['config']['cache_dir'])
         checkpoint_dir.mkdir(parents=True, exist_ok=True)
-        checkpoint_prefix = Path(self.definition['config']['cache_dir']) / 'ckpt'
         checkpoint = tf.train.Checkpoint(generator_optimizer=generator_optimizer,
                                          discriminator_optimizer=discriminator_optimizer,
                                          generator=generator,
@@ -85,7 +74,7 @@ class DCGANTrainer(TFTrainer):
         if self.definition['config']['restore_ckpt'] and ckpt_manager.latest_checkpoint:
             LATEST_EPOCH = int(ckpt_manager.latest_checkpoint.split('-')[-1])
             print("Found latest epoch is {}".format(LATEST_EPOCH))
-            checkpoint.restore(tf.train.latest_checkpoint(checkpoint_dir.__str__()))
+            checkpoint.restore(ckpt_manager.latest_checkpoint)
 
         noise_dim = self.definition['config']['noise_dim']
         num_examples_to_generate = 16
@@ -102,37 +91,33 @@ class DCGANTrainer(TFTrainer):
             load_bar_length = 50
             for i_batch, image_batch in enumerate(processed_data):
                 load_bar = '[{}{}{}]'.format(
-                    '=' * int(load_bar_length * i_batch/total_batches),
+                    '=' * int(load_bar_length * i_batch / total_batches),
                     ">",
-                    '.' * int(load_bar_length * (1 - i_batch/total_batches)))
+                    '.' * int(load_bar_length * (1 - i_batch / total_batches)))
                 print("\rEPOCH {}, Batch {}/{}\t{}".format(epoch, i_batch, total_batches, load_bar), end='')
                 self.train_step(model,
                                 (generator_optimizer, discriminator_optimizer),
                                 image_batch)
             print()
+            print('Time for epoch {} is {} sec'.format(epoch, time.time() - start))
 
-            # Any reference to epoch after this do +1 since just trained one step
-
+            current_epoch = epoch + 1
             # Produce images for the GIF as you go
             display.clear_output(wait=True)
             self.generate_and_save_images(generator,
-                                     epoch + 1,
-                                     seed)
+                                          current_epoch,
+                                          seed)
 
-            # Save the model every n epochs
-            if (epoch + 1) % self.definition['config']['checkpoint_frequency'] == 0:
-                checkpoint.save(file_prefix=checkpoint_prefix)
-
-            print('Time for epoch {} is {} sec'.format(epoch, time.time() - start))
+            # Save the model every n epochs, excluding epoch 0
+            if current_epoch % self.definition['config']['checkpoint_frequency'] == 0:
+                ckpt_manager.save(checkpoint_number=current_epoch)
 
         # Generate after the final epoch
         display.clear_output(wait=True)
         self.generate_and_save_images(generator,
-                                 EPOCHS,
-                                 seed)
-
-        history = 1
-        return history
+                                      EPOCHS,
+                                      seed)
+        return None
 
     # Notice the use of `tf.function`
     # This annotation causes the function to be "compiled".
@@ -160,7 +145,8 @@ class DCGANTrainer(TFTrainer):
         generator_optimizer.apply_gradients(zip(gradients_of_generator, generator.trainable_variables))
         discriminator_optimizer.apply_gradients(zip(gradients_of_discriminator, discriminator.trainable_variables))
 
-    def __make_generator_model(self):
+    @staticmethod
+    def make_generator_model():
         model = tf.keras.Sequential()
         model.add(layers.Dense(7 * 7 * 256, use_bias=False, input_shape=(100,)))
         model.add(layers.BatchNormalization())
@@ -184,7 +170,8 @@ class DCGANTrainer(TFTrainer):
 
         return model
 
-    def __make_discriminator_model(self):
+    @staticmethod
+    def make_discriminator_model():
         model = tf.keras.Sequential()
         model.add(layers.Conv2D(64, (5, 5), strides=(2, 2), padding='same',
                                 input_shape=[28, 28, 1]))
@@ -221,7 +208,10 @@ class DCGANTrainer(TFTrainer):
             plt.imshow(predictions[i, :, :, 0] * 127.5 + 127.5, cmap='gray')
             plt.axis('off')
 
-        plot_name = os.path.join(self.definition['config']['cache_dir'], 'image_at_epoch_{:04d}.png'.format(epoch))
+        img_dir = Path(self.definition['config']['cache_dir']) / 'imgs'
+        img_dir.mkdir(parents=True, exist_ok=True)
+
+        plot_name = img_dir / 'image_at_epoch_{:04d}.png'.format(epoch)
         plt.savefig(plot_name)
         plt.show()
 
